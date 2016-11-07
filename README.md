@@ -1,11 +1,12 @@
 # Intrigued-Mongoose
 
 
-
 ### This Week's Specs (11/7/2016)
-- [ ] Incorporate salted user auth ()
-- [ ] How do you keep safe credit card data? (encryption?)
-- [ ]
+[repo](https://github.com/rachel-ftw/good-fowl)
+- [ ] Incorporate salted user auth (bcrypt & passport)
+- [ ] How do you keep safe credit card data? (encryption?... what's best practices)
+- [ ] Refactor for kinex
+- [ ] Refactor for react
 
 #### Week 2 Specs
 
