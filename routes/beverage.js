@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Beverage } = require('../database/api/beverageDB')
+const { Beverage } = require('../database/API/beverage')
 
 router.get( '/add', ( request, response ) => {
   response.render( 'beverages/add' )
