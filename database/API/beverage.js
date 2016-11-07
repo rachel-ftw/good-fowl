@@ -1,4 +1,3 @@
-// const { Beverage } = require('../beverageDB')
 const knex = require('../mainDB')
 
 const beverage = {
@@ -20,7 +19,7 @@ const beverage = {
   getOne: ( req, res, next ) => {
     const { id } = req.params
 
-    knex( 'beverage' ).select().where({ id: id })
+    knex( 'beverage' ).select().where({ id })
       .then( data => {
         res.status( 200 )
         .json({
@@ -56,7 +55,7 @@ const beverage = {
         res.status(200)
         .json({
           status: 'success',
-          data:data,
+          data,
           message: 'Updated beverage'
         })
       })
@@ -67,7 +66,6 @@ const beverage = {
     const { id } = req.params
     knex( 'beverage').where({ id }).del()
       .then( data => {
-        console.log(data)
         return res.status(200)
         .json({
           status: 'success',
