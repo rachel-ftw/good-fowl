@@ -1,52 +1,50 @@
-const { Beverage } = require('../beverageDB')
+// const { Beverage } = require('../beverageDB')
+const knex = require('../mainDB')
 
 const beverage = {
 
-  getAll: ( request, response, next ) => {
-    Beverage.getAll()
-    .then( data => {
-      response.status(200)
-      .json({
-           status: 'success',
-           data: data,
-           message: 'Retrieved ALL beverages'
-         })
-     })
-     .catch( (err) => {
-       return next(err)
-     })
-  },
-
-  getOne: ( request, response, next ) => {
-    const { id } = request.params
-    Beverage.getById( id )
-    .then( data => {
-      response.status(200)
-      .json({
-            status: 'success',
-            data: data,
-            message: 'Retrieved one beverage'
+  getAll: ( req, res, next ) => {
+    knex( 'beverage' ).select()
+      .then( data => {
+        res.status( 200 )
+        .json({
+          status: 'success',
+          data,
+          message: 'Retrieved all beverages.'
+        })
       })
-    })
-    .catch( err => {
-      return next(err)
-    })
+      .catch(error => next( error ))
   },
 
-  add: ( request, response, next ) => {
-    const { name, manufacturer, supplier, price } = request.body
-    Beverage.add( name, manufacturer, supplier, price )
-    .then( data => {
-      response.status(200)
-      .json({
-            status: 'success',
-            data: data,
-            message: 'Created new beverage.'
-          })
-    })
-    .catch( err => {
-        return next(err)
-    })
+
+  getOne: ( req, res, next ) => {
+    const { id } = req.params
+
+    knex( 'beverage' ).select().where({ id: id })
+      .then( data => {
+        res.status( 200 )
+        .json({
+          status: 'success',
+          data,
+          message: 'retrieved specified beverage.'
+        })
+      })
+      .catch( error => next( error ))
+  },
+
+  add: (req, res, next) => {
+    const { name, manufacturer, supplier, price } = req.body
+
+    knex('beverage').returning('*').insert({ name, manufacturer, supplier, price })
+      .then( data => {
+        res.status( 200 )
+        .json({
+          status:'success',
+          data,
+          message: 'Inserted'
+        })
+      })
+      .catch( error => next( error ))
   },
 
   update: ( request, response, next ) => {

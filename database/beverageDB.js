@@ -5,28 +5,44 @@ const Beverage = {
   add: (req, res, next) => {
     const { name, price } = req.body
 
-    knex('beverage').returning('*').insert({ name, price })
+    knex('beverage').returning('*').insert({ name: name, price: price })
       .then( data => {
         res.status( 200 )
         .json({
           status:'success',
-          data,
+          data: data,
           message: 'Inserted'
         })
       })
       .catch( error => next( error ))
-  },  
+  },
+
   getAll: ( req, res, next ) => {
-    knex( 'drinks' ).select()
+    knex( 'beverage' ).select()
       .then( data => {
         response.status( 200 )
         .json({
           status: 'success',
-          data,
-          message: 'Retrieved all drinks.'
+          data: data,
+          message: 'Retrieved all beverages.'
         })
       })
       .catch(error => next( error ))
+  },
+
+  getOneById: ( req, res, next ) => {
+    const { id } = req.params
+    
+    knex( 'beverage' ).select().where({ id: id })
+      .then( data => {
+        res.status( 200 )
+        .json({
+          status: 'success',
+          data: data,
+          message: 'retrieved specified beverage.'
+        })
+      })
+      .catch( error => next( error ))
   }
   // getById: id => db.one( `SELECT * FROM beverage WHERE id = ${id}` ),
   // api_update: (id, name, manufacturer, supplier, price) => db.none( `UPDATE beverage SET name='${name}', manufacturer='${manufacturer}', supplier='${supplier}', price='${price}' WHERE id = ${id}` ),
