@@ -3,7 +3,7 @@
 
 ### This Week's Specs (11/7/2016)
 [repo](https://github.com/rachel-ftw/good-fowl)
-- [ ] Refactor for kinex
+- [ ] Refactor for Knex
 - [ ] Incorporate salted user auth (bcrypt & passport)
 - [ ] How do you keep safe credit card data? (encryption?... what's best practices)
 - [ ] Refactor for react
