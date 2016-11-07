@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -31,6 +32,7 @@
     "express-generator": "^4.13.4",
     "nodemon": "^1.11.0",
     "pg-promise": "^5.3.4",
-    "postgresql": "0.0.1"
+    "postgresql": "0.0.1",
+    "webpack": "^1.13.3"
   }
 }
