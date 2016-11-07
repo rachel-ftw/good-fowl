@@ -1,4 +1,4 @@
-const db = require('./mainDB')
+const knex = require('./mainDB')
 
 const API = {
   specialty: require('./API/specialty_pizza'),
