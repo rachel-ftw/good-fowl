@@ -1,9 +1,9 @@
-const db = require('../../mainDB')
+const knex = require('../../mainDB')
 
 const custom_pizza = {
 
   total: ( request, response, next ) => {
-    db.any( `SELECT
+    knex.any( `SELECT
             (SELECT sum(custom_pizza.price) AS "Q1" FROM transaction
               JOIN order_data ON transaction.order_id = order_data.id
               JOIN ordered_custom_pizzas ON order_data.id = ordered_custom_pizzas.order_id

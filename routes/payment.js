@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../database/mainDB')
+const knex = require('../database/mainDB')
 const { Payment } = require( '../database/paymentDB' )
 const { Customer } = require( '../database/customerDB' )
 

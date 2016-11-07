@@ -1,4 +1,4 @@
-const db = require('../../mainDB')
+const knex = require('../../mainDB')
 const sales = require('./Sales')
 
 const customer = {
@@ -6,7 +6,7 @@ const customer = {
 
     by_id: (request, response, next  ) => {
       const { id } = request.params
-     db.any( `SELECT
+     knex.any( `SELECT
             (SELECT SUM(price) AS "Q1" FROM transaction
                 JOIN order_data ON transaction.order_id=order_data.id
                 JOIN customer_transactions ON transaction.id=customer_transactions.transaction_id

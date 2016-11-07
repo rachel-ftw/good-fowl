@@ -1,4 +1,4 @@
-const db = require('../mainDB')
+const knex = require('../mainDB')
 const { Topping } = require('../custom_pizzaDB')
 
 const topping = {

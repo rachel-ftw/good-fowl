@@ -1,6 +1,9 @@
-const pgp = require('pg-promise')()
 const DATABASE_NAME = 'intriguing-mongoose'
 const connectionString = `postgres://${process.env.USER}@localhost:5432/${DATABASE_NAME}`
-const db = pgp(connectionString)
+const knex = require( 'knex' )({
+  client: 'pg',
+  connection: connectionString,
+  searchPath: 'knex,public'
+})
 
-module.exports = db
+module.exports = knex
