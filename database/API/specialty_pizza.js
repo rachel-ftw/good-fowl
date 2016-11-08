@@ -1,75 +1,80 @@
 const knex = require('../mainDB')
-const { Specialty_pizza } = require('../specialty_pizzaDB')
 
 const specialty = {
 
-  getAll: ( request, response, next ) => {
-    Specialty_pizza.getAll()
-    .then( data => {
-      response.status(200)
-      .json({
-           status: 'success',
-           data: data,
-           message: 'Retrieved ALL specialty_pizzas'
-         })
-     })
-     .catch( (err) => {
-       return next(err)
-     })
+  getAll: ( req, res, next ) => {
+    knex( 'specialty_pizza' ).select()
+      .then( data => {
+        res.status( 200 )
+        .json({
+          status: 'success',
+          data,
+          message: 'Retrieved all specialty pizzas'
+        })
+      })
+      .catch( error => next( error ))
   },
 
-  getOne: ( request, response, next ) => {
-    const { id } = request.params
-    Specialty_pizza.getById( id )
-    .then( data => {
-      response.status(200)
-      .json({
-              status: 'success',
-              data: data,
-              message: 'Retrieved single specialty pizza'
-            })
-    })
+  getOne: ( req, res, next ) => {
+    const { id } = req.params
+
+    knex( 'specialty_pizza' ).select().where({ id })
+      .then( data => {
+        res.status( 200 )
+        .json({
+          status: 'success',
+          data,
+          message: 'retrieved single specialty pizza'
+        })
+      })
+      .catch( error => next( error ))
   },
 
-  add: ( request, response, next ) => {
-    const { description, price } = request.body
-    Specialty_pizza.add( description, price )
-    .then( () => {
-      response.status(200)
-      .json({
-              status: 'success',
-              message: 'Successfully added a new specialty pizza.'
-            })
-    })
-    .catch( error => next( error ))
+  add: ( req, res, next ) => {
+    const { description, price } = req.body
+
+    knex( 'specialty_pizza' ).returning('*').insert({ description, price })
+      .then( data => {
+        res.status( 200 )
+        .json({
+          status: 'success',
+          data,
+          message: 'Successfully added a new specialty pizza.'
+        })
+      })
+      .catch( error => next( error ))
   },
 
-  update: ( request, response, next ) => {
-    const { id } = request.params
-    const { description, price } = request.body
+  update: ( req, res, next ) => {
+    const { description, price } = req.body
+    const { id } = req.params
 
-    Specialty_pizza.api_update( id, description, price )
-    .then( () => {
-      response.status(200)
-      .json({
-              status: 'succes',
-              message: 'Updated specialty pizza entry.'
-            })
-    })
-    .catch( error => next( error ))
+    knex( 'specialty_pizza' ).returning('*').where({ id }).update({ description, price })
+      .then( data => {
+        res.status(200)
+        .json({
+          status: 'success',
+          data,
+          message: 'Updated specialty pizza entry.'
+        })
+      })
+      .catch( error => next( error ))
   },
 
-  delete: ( request, response, next ) => {
-    const { id } = request.params
-    Specialty_pizza.delete( id )
-    .then( () => {
-      response.status(200)
-      .json({
-              status: 'success',
-              message: 'Deleted specialty pizza.'
-            })
-    })
-    .catch( error => next( error ))
+  delete: ( req, res, next ) => {
+    const { id } = req.params
+
+    knex( 'specialty_pizza' ).where({ id }).del()
+      .then( data => {
+        res.status( 200 )
+        .json({
+          status: 'success',
+          data,
+          message: 'Deleted specialty pizza.'
+        })
+      })
+      .catch( error => next( error ))
   }
 }
+
 module.exports = specialty

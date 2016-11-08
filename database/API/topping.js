@@ -1,75 +1,80 @@
 const knex = require('../mainDB')
-const { Topping } = require('../custom_pizzaDB')
 
 const topping = {
-  getAll: ( request, response, next ) => {
-    Topping.getAll()
-    .then( data => {
-      response.status(200)
-      .json({
-           status: 'success',
-           data: data,
-           message: 'Retrieved ALL toppings'
-         })
-     })
-     .catch( (err) => {
-       return next(err)
-     })
-  },
-  add: ( request, response, next ) => {
-    const { name, price } = request.body
-    Topping.add( name, price )
-    .then( () => {
-        response.status(200)
-      .json({
+
+  getAll: ( req, res, next ) => {
+    knex( 'topping' ).select()
+      .then( data => {
+        res.status( 200 )
+        .json({
           status: 'success',
-          message: 'Added topping'
-          })
-    })
-    .catch( err => {
-      return next(err)
-    })
+          data,
+          message: 'Retrieved all toppings'
+        })
+      })
+      .catch( error => next( error ))
+  },
 
-  },
-  getOne: ( request, response, next ) => {
-    const { id } = request.params
-    Topping.getById( id )
-    .then( data => {
-      response.status(200)
-      .json({
-              status: 'success',
-              data: data,
-              message: 'Retrieved single topping'
-            })
-    })
-  },
-  update: ( request, response, next ) => {
-    const { id } = request.params
-    const { name, price } = request.body
+  getOne: ( req, res, next ) => {
+    const { id } = req.params
 
-    Topping.api_update( id, name, price )
-    .then( () => {
-      response.status(200)
-      .json({
-              status: 'succes',
-              message: 'Updated Topping entry.'
-            })
-    })
-    .catch( error => next( error ))
+    knex( 'topping' ).select().where({ id })
+      .then( data => {
+        res.status( 200 )
+        .json({
+          status: 'success',
+          data,
+          message: 'retrieved single topping'
+        })
+      })
+      .catch( error => next( error ))
   },
-  delete: ( request, response, next ) => {
-    const { id } = request.params
-    Topping.delete( id )
-    .then( () => {
-      response.status(200)
-      .json({
-              status: 'success',
-              message: 'Deleted topping.'
-            })
-    })
-    .catch( error => next( error ))
+
+  add: ( req, res, next ) => {
+    const { name, price } = req.body
+
+    knex( 'topping' ).returning('*').insert({ name, price })
+      .then( data => {
+        res.status( 200 )
+        .json({
+          status: 'success',
+          data,
+          message: 'Successfully added a new topping'
+        })
+      })
+      .catch( error => next( error ))
+  },
+
+  update: ( req, res, next ) => {
+    const { name, price } = req.body
+    const { id } = req.params
+
+    knex( 'topping' ).returning('*').where({ id }).update({ name, price })
+      .then( data => {
+        res.status(200)
+        .json({
+          status: 'success',
+          data,
+          message: 'Updated topping'
+        })
+      })
+      .catch( error => next( error ))
+  },
+
+  delete: ( req, res, next ) => {
+    const { id } = req.params
+
+    knex( 'topping' ).where({ id }).del()
+      .then( data => {
+        res.status( 200 )
+        .json({
+          status: 'success',
+          data,
+          message: 'Deleted topping'
+        })
+      })
+      .catch( error => next( error ))
   }
-
 }
 
 module.exports = topping
