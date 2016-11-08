@@ -1,7 +1,6 @@
 const knex = require('../mainDB')
 
 const topping = {
-
   getAll: ( req, res, next ) => {
     knex( 'topping' ).select()
       .then( data => {

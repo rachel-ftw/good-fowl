@@ -1,21 +1,21 @@
 const knex = require('./mainDB')
 
 
-const Crust = {
+// const Crust = {
 
-  // add: ( name, price ) => knex.none( `INSERT INTO crust ( name, price ) VALUES ( '${name}', '${price}' )` ),
-  // getAll: () => knex.any( `SELECT * FROM crust` ),
-  // getById: crust_id => knex.one( `SELECT * FROM crust WHERE id = ${crust_id}` ),
-  // api_update: ( id, name, price ) => knex.none( `UPDATE crust SET name='${name}', price=${price} WHERE id = ${id}`),
-  update: ( id, name, price ) => {
-          let sql =                 `BEGIN TRANSACTION;`
-          if ( name != '' ) sql +=  `UPDATE crust SET name='${name}' WHERE id = ${id};`
-          if ( price != '' ) sql += `UPDATE crust SET price=${price} WHERE id = ${id};`
-          sql +=                    `COMMIT;`
-          knex.none( sql )},
-  // delete: id => knex.none( `DELETE FROM crust WHERE id = '${id}'` )
+//   // add: ( name, price ) => knex.none( `INSERT INTO crust ( name, price ) VALUES ( '${name}', '${price}' )` ),
+//   // getAll: () => knex.any( `SELECT * FROM crust` ),
+//   // getById: crust_id => knex.one( `SELECT * FROM crust WHERE id = ${crust_id}` ),
+//   // // api_update: ( id, name, price ) => knex.none( `UPDATE crust SET name='${name}', price=${price} WHERE id = ${id}`),
+//   // update: ( id, name, price ) => {
+//   //         let sql =                 `BEGIN TRANSACTION;`
+//   //         if ( name != '' ) sql +=  `UPDATE crust SET name='${name}' WHERE id = ${id};`
+//   //         if ( price != '' ) sql += `UPDATE crust SET price=${price} WHERE id = ${id};`
+//   //         sql +=                    `COMMIT;`
+//   //         knex.none( sql )},
+//   // delete: id => knex.none( `DELETE FROM crust WHERE id = '${id}'` )
 
-}
+// }
 
 const Topping = {
 
@@ -31,8 +31,6 @@ const Topping = {
           sql +=                  `COMMIT;`
           knex.none( sql ) },
   delete: id => knex.none( `DELETE FROM topping WHERE id=${id}` )
-
-
 }
 
 const CustomPizza = {
@@ -55,4 +53,4 @@ const CustomPizza = {
                                   WHERE id = ${pizza_id} RETURNING price` )
 }
 
-module.exports = { Crust, Topping, CustomPizza }
+module.exports = { Topping, CustomPizza }

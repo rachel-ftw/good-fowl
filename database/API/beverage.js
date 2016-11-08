@@ -1,7 +1,6 @@
 const knex = require('../mainDB')
 
 const beverage = {
-
   getAll: ( req, res, next ) => {
     knex( 'beverage' ).select()
       .then( data => {

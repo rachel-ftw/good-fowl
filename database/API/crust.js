@@ -1,5 +1,4 @@
 const knex = require('../mainDB')
-const { Crust } = require('../custom_pizzaDB')
 
 const crust = {
   getAll: ( req, res, next ) => {
