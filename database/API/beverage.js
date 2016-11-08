@@ -1,4 +1,3 @@
-// const { Beverage } = require('../beverageDB')
 const knex = require('../mainDB')
 
 const beverage = {
@@ -13,14 +12,13 @@ const beverage = {
           message: 'Retrieved all beverages.'
         })
       })
-      .catch(error => next( error ))
+      .catch( error => next( error ))
   },
-
 
   getOne: ( req, res, next ) => {
     const { id } = req.params
 
-    knex( 'beverage' ).select().where({ id: id })
+    knex( 'beverage' ).select().where({ id })
       .then( data => {
         res.status( 200 )
         .json({
@@ -32,14 +30,16 @@ const beverage = {
       .catch( error => next( error ))
   },
 
-  add: (req, res, next) => {
+  add: ( req, res, next ) => {
     const { name, manufacturer, supplier, price } = req.body
 
-    knex('beverage').returning('*').insert({ name, manufacturer, supplier, price })
+    knex( 'beverage' ).returning( '*' ).insert({
+      name, manufacturer, supplier, price
+    })
       .then( data => {
         res.status( 200 )
         .json({
-          status:'success',
+          status: 'success',
           data,
           message: 'Inserted'
         })
@@ -51,12 +51,14 @@ const beverage = {
     const { name, manufacturer, supplier, price } = req.body
     const { id } = req.params
 
-    knex( 'beverage' ).returning('*').where({ id }).update({name, manufacturer, supplier, price})
+    knex( 'beverage' ).returning( '*' ).where({ id }).update({
+      name, manufacturer, supplier, price
+    })
       .then( data => {
         res.status(200)
         .json({
           status: 'success',
-          data:data,
+          data,
           message: 'Updated beverage'
         })
       })
@@ -65,13 +67,13 @@ const beverage = {
 
   delete: ( req, res, next ) => {
     const { id } = req.params
+
     knex( 'beverage').where({ id }).del()
       .then( data => {
-        console.log(data)
-        return res.status(200)
+        res.status( 200 )
         .json({
           status: 'success',
-          data:data,
+          data,
           message: 'Deleted the drink!'
         })
       })
