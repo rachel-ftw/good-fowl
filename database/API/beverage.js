@@ -34,7 +34,9 @@ const beverage = {
   add: (req, res, next) => {
     const { name, manufacturer, supplier, price } = req.body
 
-    knex('beverage').returning('*').insert({ name, manufacturer, supplier, price })
+    knex( 'beverage' ).returning( '*' ).insert({ 
+      name, manufacturer, supplier, price 
+    })
       .then( data => {
         res.status( 200 )
         .json({
@@ -50,7 +52,9 @@ const beverage = {
     const { name, manufacturer, supplier, price } = req.body
     const { id } = req.params
 
-    knex( 'beverage' ).returning('*').where({ id }).update({name, manufacturer, supplier, price})
+    knex( 'beverage' ).returning( '*' ).where({ id }).update({
+      name, manufacturer, supplier, price
+    })
       .then( data => {
         res.status(200)
         .json({

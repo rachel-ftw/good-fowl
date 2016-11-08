@@ -2,7 +2,6 @@ const knex = require('../mainDB')
 const { Crust } = require('../custom_pizzaDB')
 
 const crust = {
-
   getAll: ( req, res, next ) => {
     knex( 'crust' ).select()
     .then( data => {
@@ -50,7 +49,7 @@ const crust = {
     const { name, price } = req.body
     const { id } = req.params
 
-    knex( 'crust' ).returning( '*' ).where({ id }).update( name, price )
+    knex( 'crust' ).returning( '*' ).where({ id }).update({ name, price })
     .then( () => {
       res.status(200)
       .json({
@@ -63,6 +62,7 @@ const crust = {
 
   delete: ( req, res, next ) => {
     const { id } = req.params
+
     knex( 'crust' ).where({ id }).del()
       .then( () => {
         res.status(200)
@@ -73,8 +73,6 @@ const crust = {
       })
       .catch( error => next( error ))
   }
-
-
 }
 
 module.exports = crust
