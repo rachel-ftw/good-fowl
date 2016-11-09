@@ -7,7 +7,7 @@ class App extends Component {
   render() {
     return (
       <div className="splash-background">
-        <LogInForm />
+        <LogInForm username="hi" password="passsssss" />
       </div>
     );
   }
