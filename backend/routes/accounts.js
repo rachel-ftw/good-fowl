@@ -9,13 +9,16 @@ const authOptions = {
   failureRedirect: '/accounts/login'
 }
 
-router.post( '/login' , passport.authenticate( 'local'), ( req, res) =>{
+router.post( '/login', passport.authenticate( 'local' ), ( req, res ) => {
   const username = req.body.username
+  console.log(username)
+
   if( req.username !== undefined && req.user.id == id ) {
     account.getOneByUsername( username )
-    .then( result => {
-      return console.log('oh hai')
-  })
+      .then( result => {
+        return console.log('oh hai')
+      })
+  } 
 })
 
 router.get( '/logout', ( req, res ) => {
@@ -30,4 +33,4 @@ router.post('/', account.add )
 router.put('/:id', account.update )
 router.delete('/:id', account.delete )
 
-module.exports = router;
+module.exports = router
