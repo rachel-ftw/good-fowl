@@ -17,6 +17,7 @@ const HTMLroot = document.getElementById('root')
 ReactDOM.render(
   <Router history={hashHistory}>
     <Route path="/" component={App}>
+      
       <IndexRoute component={Landing}></IndexRoute>
       <Route path="OrderHome" component={OrderHome}></Route>
       <Route path="ProfileHome" component={ProfileHome}></Route>

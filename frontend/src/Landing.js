@@ -8,6 +8,7 @@ export default class Landing extends Component {
     return(
       <div>
         <p>I'm the index :D</p>
+        <LogInForm />
       </div>  
     )
   }

@@ -1,43 +1,73 @@
 import React, { Component } from 'react'
-import Request from 'superagent'
+// import Request from 'superagent'
+import BeverageRow from './BeverageRow'
 
 export default class Listener extends Component {
   constructor() {
     super()
-    this.state = {}
+    this.state = {
+      beverages: []
+    }
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   
   componentWillMount() {
-    const beverageURL = `http://localhost:5000/beverage`
+    // Called the first time the component is loaded right before the component is added to the page
+    console.log('component mounted')
+    const url = 'http://localhost:5000/beverage'
 
-    Request.get(beverageURL).then( response => {
+    const fetchIsHappenning = {
+      method: 'GET', mode: 'cors', headers: new Headers({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      })
+    }
+    fetch( url, fetchIsHappenning )
+    .then( data => data.json())
+    .then( data => {
+      const beverages = []
+      data.data.forEach( drink => beverages.push(drink))
       this.setState({
-        beverages: response
+        beverages: beverages
       })
     })
-    // ( `http://localhost:5000/beverage`, (err, res, body) => {
-    //   let result = JSON.parse(body)
-    //   console.log("oh hai it's your body",body)
-
-    //   if( this.isMounted() ) {
-    //     this.setState(result.data)
-    //   }
-    // }
-    // .bind( this ) )
-      // .then(result => {
-      //   console.log('hai')
-      //   this.setState({beverage:result.json()})
-      // })
   }
+
+  componentDidMount(){
+    // Called after the component has been rendered into the page
+  }
+
+  componentWillReceiveProps(nextProps){
+    // Called when the props provided to the component are changed
+  }
+
+  componentWillUpdate(nextProps, nextState){
+    // Called when the props and/or state change
+  }
+
+  componentWillUnmount(){
+    // Called when the component is removed
+  }
+
+  handleSubmit(event) {
+    //write some stuff here that puts the posts the form stuff
+
+    console.log('Text field username is: ' + this.state.username + 
+      ' pass username is: ' + this.state.password);
+  }
+
   
   render() {
     return(
       <div>
-        <h3>Beverage:</h3>
-        <p>this is your beverages: {this.state.beverage}</p>
-        
-        )}
-      </div>  
+        <form action="http://localhost:5000/login" method="post">
+          <BeverageRow beverages={this.state.beverages} />
+          <button onClick={this.handleSubmit}>
+            Submit
+          </button>
+        </form>
+      </div>
     )
   }
 }
+

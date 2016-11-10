@@ -3,14 +3,17 @@ const path = require('path');
 const favicon = require('serve-favicon');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const cors = require( 'cors' )
+
 
 const index = require('./routes/index');
 const accounts = require('./routes/accounts');
 const session = require( 'express-session')
 const passport = require( './passport' );
 
-
 const app = express();
+
+app.options('*', cors())
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -19,7 +22,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
 
 app.use( session( {
   secret: 'pizza love forever',
@@ -30,6 +32,14 @@ app.use( session( {
 app.use( passport.initialize() )
 app.use( passport.session() )
 
+app.use( (request, response, next ) => {
+  if (request.method === "OPTIONS") {
+    response.header('Access-Control-Allow-Origin', request.headers.origin);
+  } else {
+    response.header('Access-Control-Allow-Origin', '*');
+  }
+  next()
+})
 
 app.use('/', index);
 app.use('/accounts', accounts);
