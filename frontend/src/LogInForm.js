@@ -27,24 +27,26 @@ export default class LogInForm extends Component {
 
   render() {
     return (
-      <div className="log-in-box">
-        <h1>So much pizza.</h1>
-        <h3>it drives you crazy.</h3>
-        <p>You only have to log in for more pizza than you could possibly handle.</p>
-        <div className="email-pass-form">
-          <form action="http://localhost:5000/login" method="post">
-            <input type="text"
-              placeholder="Username"
-              username={this.state.username}
-              onChange={this.handleUsername} />
-            <input type="text"
-              placeholder="Pass"
-              password={this.state.password}
-              onChange={this.handlePass} />
-            <button onClick={this.handleSubmit}>
-              Submit
-            </button>
-          </form>
+      <div className="splash-background">
+        <div className="log-in-box">
+          <h1>So much pizza.</h1>
+          <h3>it drives you crazy.</h3>
+          <p>You only have to log in for more pizza than you could possibly handle.</p>
+          <div className="email-pass-form">
+            <form action="http://localhost:5000/login" method="post">
+              <input type="text"
+                placeholder="Username"
+                username={this.state.username}
+                onChange={this.handleUsername} />
+              <input type="text"
+                placeholder="Pass"
+                password={this.state.password}
+                onChange={this.handlePass} />
+              <button onClick={this.handleSubmit}>
+                Submit
+              </button>
+            </form>
+          </div>
         </div>
       </div>
   )}
